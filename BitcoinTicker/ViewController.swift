@@ -36,8 +36,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     
     //loops throught the component item and displays the currency title based on the currency array's index starting from 0 by default
+    //NOTE : This delegate mathod will going to be called by the UIPicker upon loading up.. and its going to look here to fetch the titles to be displayed on the UIPicker
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        currencyArray[row]
+        return currencyArray[row]
     }
     
 
