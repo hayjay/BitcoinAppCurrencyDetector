@@ -35,8 +35,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         currencyArray.count //returns the number of currency we have
         }
     
+    //loops throught the component item and displays the currency title based on the currency array's index starting from 0 by default
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        <#code#>
+        currencyArray[row]
     }
     
 
