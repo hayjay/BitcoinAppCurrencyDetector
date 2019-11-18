@@ -41,6 +41,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return currencyArray[row]
     }
     
+    //this delegate method gets called when a user selects any row which could be any currency he desires
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print(row)
+    }
+    
 
     
     override func viewDidLoad() {
