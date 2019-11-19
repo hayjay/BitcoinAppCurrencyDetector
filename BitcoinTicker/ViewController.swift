@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource{
     
@@ -50,6 +52,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 //        print(currencyArray[row] )
         //we need to form our endpoint using the base url and any kind of currency the user wishes to fetch its bit coin price
         finalURL = baseURL + currencyArray[row]
+        getBitcoinData(url: finalURL)
         print(finalURL)
         
     }
@@ -74,52 +77,48 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     
     
-//    
-//    //MARK: - Networking
-//    /***************************************************************/
-//    
-//    func getWeatherData(url: String, parameters: [String : String]) {
-//        
-//        Alamofire.request(url, method: .get, parameters: parameters)
-//            .responseJSON { response in
-//                if response.result.isSuccess {
-//
-//                    print("Sucess! Got the weather data")
-//                    let weatherJSON : JSON = JSON(response.result.value!)
-//
-//                    self.updateWeatherData(json: weatherJSON)
-//
-//                } else {
-//                    print("Error: \(String(describing: response.result.error))")
-//                    self.bitcoinPriceLabel.text = "Connection Issues"
-//                }
-//            }
-//
-//    }
-//
-//    
-//    
-//    
-//    
-//    //MARK: - JSON Parsing
-//    /***************************************************************/
-//    
-//    func updateWeatherData(json : JSON) {
-//        
-//        if let tempResult = json["main"]["temp"].double {
-//        
-//        weatherData.temperature = Int(round(tempResult!) - 273.15)
-//        weatherData.city = json["name"].stringValue
-//        weatherData.condition = json["weather"][0]["id"].intValue
-//        weatherData.weatherIconName =    weatherData.updateWeatherIcon(condition: weatherData.condition)
-//        }
-//        
-//        updateUIWithWeatherData()
-//    }
-//    
+    
+    //MARK: - Networking
+    /***************************************************************/
+    
+    func getBitcoinData(url: String) {
+        
+        Alamofire.request(url, method: .get)
+            .responseJSON { response in
+                if response.result.isSuccess {
 
+                    print("Sucess! Got the Bitcoin data!")
+                    let bitcointJSON : JSON = JSON(response.result.value!)
 
+                    self.updateBitcoinData(json: bitcointJSON)
 
+                } else {
+                    print("Error: \(String(describing: response.result.error))")
+                    self.bitcoinPriceLabel.text = "Connection Issues!"
+                }
+            }
 
+    }
+
+    
+    
+    
+    
+    //MARK: - JSON Parsing
+    /***************************************************************/
+    
+    func updateBitcoinData(json : JSON) {
+        
+        //use of optional binding so that we could bind the result of the json to the bitcoinResult variable
+        //Note : the optional binding helps to check is the json["ask"] value is not nil before asinging the value to the bitcoinResult variable and execute the code in the if block
+        if let bitcoinResult = json["ask"].double {
+//            update the UI on the fetched result from the bitcoin API
+            //this shows the user the bitcoin price
+            bitcoinPriceLabel.text = String(bitcoinResult)
+        }else{
+            bitcoinPriceLabel.text = "Price Unavailable!"
+        }
+    }
+    
 }
 
