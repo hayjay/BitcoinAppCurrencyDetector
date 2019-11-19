@@ -42,10 +42,18 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     //this delegate method gets called when a user selects any row which could be any currency he desires
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print(row)
-    }
     
+//    this didselectRow pickerview delegate gets called when a user selects a row in a component
+    
+    //To summarize it, this function simply prints out the currency the user has selected using the row technique
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) { //this methods finaly returns a row
+//        print(currencyArray[row] )
+        //we need to form our endpoint using the base url and any kind of currency the user wishes to fetch its bit coin price
+        finalURL = baseURL + currencyArray[row]
+        print(finalURL)
+        
+    }
+     
 
     
     override func viewDidLoad() {
