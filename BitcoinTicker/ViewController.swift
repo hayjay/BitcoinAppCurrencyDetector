@@ -19,7 +19,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     let baseURL = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTC"
     let currencyArray = ["AUD", "BRL","CAD","CNY","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","NOK","NZD","PLN","RON","RUB","SEK","SGD","USD","ZAR"]
+    let currencySymbolArray = ["$", "R$", "$", "Â¥", "â‚¬", "Â£", "$", "Rp", "â‚ª", "â‚¹", "Â¥", "$", "kr", "$", "zÅ‚", "lei", "â‚½", "kr", "$", "$", "R"]
     var finalURL = ""
+    var currencySelected = ""
 
     //Pre-setup IBOutlets
     @IBOutlet weak var bitcoinPriceLabel: UILabel!
@@ -52,6 +54,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 //        print(currencyArray[row] )
         //we need to form our endpoint using the base url and any kind of currency the user wishes to fetch its bit coin price
         finalURL = baseURL + currencyArray[row]
+        //making currency symbol dynamic based on the selected currency and mapping the currency symbol array index to it
+        currencySelected = currencySymbolArray[row]
         getBitcoinData(url: finalURL)
         print(finalURL)
         
@@ -114,7 +118,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if let bitcoinResult = json["ask"].double {
 //            update the UI on the fetched result from the bitcoin API
             //this shows the user the bitcoin price
-            bitcoinPriceLabel.text = String(bitcoinResult)
+            bitcoinPriceLabel.text = currencySelected + String(bitcoinResult)
         }else{
             bitcoinPriceLabel.text = "Price Unavailable!"
         }
